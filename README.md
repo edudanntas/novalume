@@ -4,7 +4,21 @@ Welcome to NovaLume, an e-commerce platform built with a microservices architect
 
 ## Architecture
 
+### System Overview
+
 ![NovaLume Architecture Diagram](docs/architecture/images/novalume-architecture.png)
+
+### Asynchronous Communication
+
+![Asynchronous Services Communication](docs/architecture/images/async-communication.png)
+
+The NovaLume platform uses message-based asynchronous communication via Kafka/RabbitMQ for critical operations between services:
+
+- **Order Service**: Publishes order events when orders are created, updated, or processed
+- **Payment Service**: Consumes order events and publishes payment confirmation events
+- **Notification Service**: Consumes events from various services to send emails and notifications
+
+This event-driven approach ensures system resilience and scalability.
 
 ## Project Overview
 
