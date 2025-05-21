@@ -50,7 +50,7 @@ public class ProductService {
         return productRepository.save(product);
     }
 
-    public void deleteProduct(String productId){
+    public void deleteProduct(String productId) {
         Product product = productRepository.getProductById(productId)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Product %s not found", productId)));
 
