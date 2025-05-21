@@ -7,6 +7,7 @@ import br.com.eduardo.novalumecatalogservice.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,5 +44,11 @@ public class ProductController {
     @PatchMapping(path = "/{id}")
     public ResponseEntity<Product> updateProduct(@PathVariable String id, ProductUpdateDto productUpdateDto) {
         return ResponseEntity.ok(productService.updateProduct(id, productUpdateDto));
+    }
+
+    @DeleteMapping(path = "/{productId}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable String productId){
+        productService.deleteProduct(productId);
+        return ResponseEntity.noContent().build();
     }
 }
