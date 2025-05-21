@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -33,14 +34,14 @@ public class ProductController {
         return ResponseEntity.ok(productService.findProductById(productId));
     }
 
-    @PatchMapping(path = "/{productId}")
+    @PutMapping(path = "/{productId}")
     public ResponseEntity<Void> uploadProductImage(@PathVariable String productId, @RequestPart("image") MultipartFile file) {
         productService.uploadImage(productId, file);
         return ResponseEntity.ok().build();
     }
 
-    @PatchMapping(path = "/{productId}")
-    public ResponseEntity<Product> updateProduct(@PathVariable String productId, ProductUpdateDto productUpdateDto) {
-        return ResponseEntity.ok(productService.updateProduct(productId, productUpdateDto));
+    @PatchMapping(path = "/{id}")
+    public ResponseEntity<Product> updateProduct(@PathVariable String id, ProductUpdateDto productUpdateDto) {
+        return ResponseEntity.ok(productService.updateProduct(id, productUpdateDto));
     }
 }

@@ -3,14 +3,15 @@ package br.com.eduardo.novalumecatalogservice.dto;
 import br.com.eduardo.novalumecatalogservice.model.enums.ProductCategory;
 
 import java.util.List;
+import java.util.Optional;
 
 public record ProductUpdateDto(
-        String productName,
-        String productDescription,
-        Double unitPrice,
-        Boolean sellIndicator,
-        ProductCategory productCategory,
-        List<String> imagesUrl,
-        Boolean featured
+        Optional<String> productName,
+        Optional<String> productDescription,
+        Optional<Double> unitPrice,
+        Optional<Boolean> sellIndicator,
+        Optional<ProductCategory> productCategory,
+        Optional<List<String>> imagesUrl,
+        Optional<Boolean> featured
 ) {
 }

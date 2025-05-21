@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
@@ -35,11 +36,18 @@ public class ProductService {
     }
 
     public Product updateProduct(String productId, ProductUpdateDto productUpdateDto) {
-        Product optionalProduct = productRepository.getProductById(productId)
+        Product product = productRepository.getProductById(productId)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Product %s not found", productId)));
 
-        mapper.updateProductFromDto(productUpdateDto, optionalProduct);
-        return productRepository.save(optionalProduct);
+        productUpdateDto.productName().ifPresent(product::setProductName);
+        productUpdateDto.productDescription().ifPresent(product::setProductDescription);
+        productUpdateDto.unitPrice().ifPresent(product::setUnitPrice);
+        productUpdateDto.sellIndicator().ifPresent(product::setSellIndicator);
+        productUpdateDto.productCategory().ifPresent(product::setProductCategory);
+        productUpdateDto.imagesUrl().ifPresent(images -> product.setImagesUrl(new ArrayList<>(images)));
+        productUpdateDto.featured().ifPresent(product::setFeatured);
+
+        return productRepository.save(product);
     }
 
     public void uploadImage(String productId, MultipartFile file) {
