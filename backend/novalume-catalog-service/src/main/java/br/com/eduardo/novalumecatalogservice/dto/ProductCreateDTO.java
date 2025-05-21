@@ -2,7 +2,7 @@ package br.com.eduardo.novalumecatalogservice.dto;
 
 import br.com.eduardo.novalumecatalogservice.model.enums.ProductCategory;
 
-public record ProductDto(
+public record ProductCreateDTO(
         String productName,
         String productDescription,
         double unitPrice,

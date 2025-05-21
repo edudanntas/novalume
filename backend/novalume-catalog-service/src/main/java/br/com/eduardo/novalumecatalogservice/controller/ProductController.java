@@ -1,6 +1,6 @@
 package br.com.eduardo.novalumecatalogservice.controller;
 
-import br.com.eduardo.novalumecatalogservice.dto.ProductDto;
+import br.com.eduardo.novalumecatalogservice.dto.ProductCreateDTO;
 import br.com.eduardo.novalumecatalogservice.model.Product;
 import br.com.eduardo.novalumecatalogservice.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -23,8 +23,8 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping
-    public ResponseEntity<Product> createProduct(@RequestBody ProductDto productDto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(productService.createProduct(productDto));
+    public ResponseEntity<Product> createProduct(@RequestBody ProductCreateDTO productCreateDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(productService.createProduct(productCreateDTO));
     }
 
     @GetMapping(path = "/{productId}")

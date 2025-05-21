@@ -1,6 +1,6 @@
 package br.com.eduardo.novalumecatalogservice.service;
 
-import br.com.eduardo.novalumecatalogservice.dto.ProductDto;
+import br.com.eduardo.novalumecatalogservice.dto.ProductCreateDTO;
 import br.com.eduardo.novalumecatalogservice.infra.exception.custom.EntityAlreadyExistsException;
 import br.com.eduardo.novalumecatalogservice.infra.exception.custom.EntityNotFoundException;
 import br.com.eduardo.novalumecatalogservice.mapper.ProductMapper;
@@ -19,13 +19,13 @@ public class ProductService {
     private final ProductMapper mapper;
     private final MinioUploadImageService imageService;
 
-    public Product createProduct(ProductDto productDto) {
+    public Product createProduct(ProductCreateDTO productCreateDTO) {
 
-        if (productRepository.getProductByProductName(productDto.productName()).isPresent()) {
+        if (productRepository.getProductByProductName(productCreateDTO.productName()).isPresent()) {
             throw new EntityAlreadyExistsException("already Exists");
         }
 
-        return productRepository.save(mapper.mapProductDtoToProductEntity(productDto));
+        return productRepository.save(mapper.mapCreateProductDtoToProductEntity(productCreateDTO));
     }
 
     public Product findProductById(String productId) {
