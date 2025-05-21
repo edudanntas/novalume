@@ -10,7 +10,7 @@
     </parent>
     <groupId>br.com.eduardo</groupId>
     <artifactId>novalume-catalog-service</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>novalume-catalog-service</name>
     <description>novalume-catalog-service</description>
     <url/>
@@ -31,6 +31,7 @@
         <org.mapstruct.version>1.6.3</org.mapstruct.version>
         <maven.checkstyle.version>3.3.1</maven.checkstyle.version>
         <spotbugs.version>4.9.3.0</spotbugs.version>
+        <minio.version>8.5.17</minio.version>
     </properties>
     <dependencies>
         <!-- Spring Dependencies-->
@@ -67,6 +68,11 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+            <version>${minio.version}</version>
         </dependency>
 
         <!-- Test Dependencies -->

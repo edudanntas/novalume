@@ -30,6 +30,11 @@ management:
     health:
       show-details: always
 
+minio:
+  secret-key: OMRkuDONKzvuXgoL2Y93bMyETPJTstwp5ixp8AsZ
+  access-key: IaZSjwqF7MevkDnF6vXS
+  base-url: http://localhost:9000
+
 logging:
   level:
     root: INFO
