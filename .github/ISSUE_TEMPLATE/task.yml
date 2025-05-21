@@ -1,0 +1,103 @@
+name: 📋 Task
+description: Create a specific task for tracking
+title: "[TASK] "
+labels: ["task"]
+body:
+  - type: markdown
+    attributes:
+      value: "## Task Description\n\nA clear and concise description of what needs to be done."
+  - type: textarea
+    id: task_description
+    attributes:
+      label: "Task Description"
+      description: "Explain what needs to be done in this task."
+      placeholder: "Enter task details here..."
+    validations:
+      required: true
+
+  - type: markdown
+    attributes:
+      value: "## Objective\n\nWhat is the expected outcome after completing this task?"
+  - type: textarea
+    id: task_objective
+    attributes:
+      label: "Objective"
+      description: "Explain the task objective."
+      placeholder: "Enter the expected result here..."
+    validations:
+      required: true
+
+  - type: markdown
+    attributes:
+      value: "## Checklist\n\nCheck the items that need to be completed."
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: "Checklist"
+      options:
+        - label: "Item 1"
+          required: false
+        - label: "Item 2"
+          required: false
+        - label: "Item 3"
+          required: false
+
+  - type: markdown
+    attributes:
+      value: "## Completion Criteria\n\nCheck the criteria that need to be met."
+  - type: checkboxes
+    id: completion_criteria
+    attributes:
+      label: "Completion Criteria"
+      options:
+        - label: "Criterion 1"
+          required: false
+        - label: "Criterion 2"
+          required: false
+        - label: "Criterion 3"
+          required: false
+
+  - type: markdown
+    attributes:
+      value: "## Priority\n\nSet the task priority."
+  - type: dropdown
+    id: priority
+    attributes:
+      label: "Priority"
+      options:
+        - "Low"
+        - "Medium"
+        - "High"
+        - "Urgent"
+
+  - type: markdown
+    attributes:
+      value: "## Estimated Effort\n\nEstimate the effort needed to complete this task."
+  - type: dropdown
+    id: effort
+    attributes:
+      label: "Estimated Effort"
+      options:
+        - "Small (< 1 day)"
+        - "Medium (1-3 days)"
+        - "Large (> 3 days)"
+
+  - type: markdown
+    attributes:
+      value: "## Related To\n\nMention related issues, PRs, or other tasks."
+  - type: input
+    id: related_items
+    attributes:
+      label: "Related To"
+      description: "Include related issue or PR numbers (e.g., #123)."
+      placeholder: "#123, #456"
+
+  - type: markdown
+    attributes:
+      value: "## Additional Notes\n\nAny additional information, context, or relevant references."
+  - type: textarea
+    id: additional_notes
+    attributes:
+      label: "Additional Notes"
+      description: "Add extra information or context if needed."
+      placeholder: "Enter any additional notes here..."
