@@ -1,6 +1,7 @@
 package br.com.eduardo.novalumecatalogservice.controller;
 
 import br.com.eduardo.novalumecatalogservice.dto.ProductCreateDTO;
+import br.com.eduardo.novalumecatalogservice.dto.ProductUpdateDto;
 import br.com.eduardo.novalumecatalogservice.model.Product;
 import br.com.eduardo.novalumecatalogservice.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -36,5 +37,10 @@ public class ProductController {
     public ResponseEntity<Void> uploadProductImage(@PathVariable String productId, @RequestPart("image") MultipartFile file) {
         productService.uploadImage(productId, file);
         return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping(path = "/{productId}")
+    public ResponseEntity<Product> updateProduct(@PathVariable String productId, ProductUpdateDto productUpdateDto) {
+        return ResponseEntity.ok(productService.updateProduct(productId, productUpdateDto));
     }
 }

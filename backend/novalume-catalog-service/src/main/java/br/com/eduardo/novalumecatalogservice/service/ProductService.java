@@ -1,6 +1,7 @@
 package br.com.eduardo.novalumecatalogservice.service;
 
 import br.com.eduardo.novalumecatalogservice.dto.ProductCreateDTO;
+import br.com.eduardo.novalumecatalogservice.dto.ProductUpdateDto;
 import br.com.eduardo.novalumecatalogservice.infra.exception.custom.EntityAlreadyExistsException;
 import br.com.eduardo.novalumecatalogservice.infra.exception.custom.EntityNotFoundException;
 import br.com.eduardo.novalumecatalogservice.mapper.ProductMapper;
@@ -31,6 +32,14 @@ public class ProductService {
     public Product findProductById(String productId) {
         return productRepository.getProductById(productId)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Product %s not found", productId)));
+    }
+
+    public Product updateProduct(String productId, ProductUpdateDto productUpdateDto) {
+        Product optionalProduct = productRepository.getProductById(productId)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Product %s not found", productId)));
+
+        mapper.updateProductFromDto(productUpdateDto, optionalProduct);
+        return productRepository.save(optionalProduct);
     }
 
     public void uploadImage(String productId, MultipartFile file) {
