@@ -28,6 +28,11 @@ public class ProductService {
         return productRepository.save(mapper.mapProductDtoToProductEntity(productDto));
     }
 
+    public Product findProductById(String productId) {
+        return productRepository.getProductById(productId)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Product %s not found", productId)));
+    }
+
     public void uploadImage(String productId, MultipartFile file) {
 
         Optional<Product> product = productRepository.getProductById(productId);
@@ -36,7 +41,7 @@ public class ProductService {
             throw new EntityNotFoundException(String.format("Product %s not found", productId));
         }
 
-        if (file.isEmpty()){
+        if (file.isEmpty()) {
             throw new IllegalArgumentException("File cannot be null");
         }
 
