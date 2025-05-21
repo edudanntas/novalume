@@ -1,0 +1,36 @@
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: novalume-catalog-dev
+      authentication-database: admin
+      auto-index-creation: true
+  devtools:
+    restart:
+      enabled: true
+      additional-paths: src/main/java
+    livereload:
+      enabled: false
+
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: always
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    root: INFO
+    br.com.eduardo: DEBUG
+    org.springframework.data.mongodb: DEBUG
+    org.springframework.web: DEBUG

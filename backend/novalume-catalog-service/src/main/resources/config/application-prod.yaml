@@ -1,0 +1,42 @@
+spring:
+  data:
+    mongodb:
+      uri: ${MONGODB_URI:mongodb://user:password@mongodb:27017/novalume-catalog-prod}
+  devtools:
+    restart:
+      enabled: false
+    livereload:
+      enabled: false
+
+server:
+  port: ${PORT:8080}
+  error:
+    include-message: never
+    include-binding-errors: never
+    include-stacktrace: never
+  tomcat:
+    max-threads: 200
+    max-connections: 10000
+    accept-count: 100
+    connection-timeout: 5000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  endpoint:
+    health:
+      show-details: never
+      probes:
+        enabled: true
+
+logging:
+  level:
+    root: WARN
+    br.com.eduardo: INFO
+  file:
+    name: /var/log/novalume-catalog-service.log
+  pattern:
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"

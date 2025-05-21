@@ -1,0 +1,15 @@
+services:
+  mongodb:
+    container_name: mongodb
+    image: mongo:latest
+    environment:
+      - 'MONGO_INITDB_ROOT_USERNAME=admin'
+      - 'MONGO_INITDB_ROOT_PASSWORD=verysecret'
+      - 'MONGO_INITDB_DATABASE=novalume-catalog-dev'
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongodb:/data/db
+
+volumes:
+  mongodb:

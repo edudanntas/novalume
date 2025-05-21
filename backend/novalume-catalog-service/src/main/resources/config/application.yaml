@@ -1,0 +1,46 @@
+spring:
+  application:
+    name: novalume-catalog-service
+  profiles:
+    active: dev
+  data:
+    mongodb:
+      auto-index-creation: true
+  jackson:
+    default-property-inclusion: non_null
+    serialization:
+      write-dates-as-timestamps: false
+      fail-on-empty-beans: false
+    deserialization:
+      fail-on-unknown-properties: false
+
+server:
+  port: 8080
+  shutdown: graceful
+  compression:
+    enabled: true
+    mime-types: application/json,application/xml,text/html,text/plain
+    min-response-size: 1024
+
+management:
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: when_authorized
+  info:
+    env:
+      enabled: true
+    java:
+      enabled: true
+    os:
+      enabled: true
+
+logging:
+  level:
+    root: INFO
+    br.com.eduardo: INFO
+    org.springframework: WARN
