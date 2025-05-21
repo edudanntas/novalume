@@ -29,33 +29,35 @@ body:
 
   - type: markdown
     attributes:
-      value: "## Checklist\n\nCheck the items that need to be completed."
-  - type: checkboxes
+      value: "## Checklist\n\nList the items that need to be completed."
+  - type: textarea
     id: checklist
     attributes:
       label: "Checklist"
-      options:
-        - label: "Item 1"
-          required: false
-        - label: "Item 2"
-          required: false
-        - label: "Item 3"
-          required: false
+      description: "Add items to be completed (use - [ ] for each item)"
+      placeholder: |
+        - [ ] Item 1
+        - [ ] Item 2
+        - [ ] Item 3
+        - [ ] Add more items as needed...
+    validations:
+      required: false
 
   - type: markdown
     attributes:
-      value: "## Completion Criteria\n\nCheck the criteria that need to be met."
-  - type: checkboxes
+      value: "## Completion Criteria\n\nList the criteria that need to be met."
+  - type: textarea
     id: completion_criteria
     attributes:
       label: "Completion Criteria"
-      options:
-        - label: "Criterion 1"
-          required: false
-        - label: "Criterion 2"
-          required: false
-        - label: "Criterion 3"
-          required: false
+      description: "Add criteria to be met (use - [ ] for each criterion)"
+      placeholder: |
+        - [ ] Criterion 1
+        - [ ] Criterion 2
+        - [ ] Criterion 3
+        - [ ] Add more criteria as needed...
+    validations:
+      required: false
 
   - type: markdown
     attributes:
