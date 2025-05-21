@@ -110,10 +110,9 @@ The coverage report will be available at `target/site/jacoco/index.html`
 
 ## CI/CD
 
-The project uses GitHub Actions for continuous integration and deployment.
+The project uses GitHub Actions for continuous integration and deployment. (in progress)
 
 ## Documentation
 
-API documentation is available via Swagger UI when the application is running:
+API documentation is available via Swagger UI when the application is running: (in progress)
 http://localhost:8080/swagger-ui.html
-```
