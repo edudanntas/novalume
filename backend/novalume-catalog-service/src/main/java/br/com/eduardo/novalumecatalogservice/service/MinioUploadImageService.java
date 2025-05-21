@@ -4,7 +4,6 @@ import io.minio.BucketExistsArgs;
 import io.minio.MakeBucketArgs;
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
-import io.minio.UploadObjectArgs;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -42,7 +41,7 @@ public class MinioUploadImageService {
 
             return String.format("%s/%s/%s", BASE_URL, BUCKET_NAME, fileName);
         } catch (Exception e) {
-            throw new RuntimeException("Erro ao fazer upload da imagem: " + e.getMessage(), e);
+            throw new RuntimeException("Upload error: " + e.getMessage(), e);
         }
     }
 
