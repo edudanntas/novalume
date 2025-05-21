@@ -1,0 +1,33 @@
+# Configuração do Spring
+spring:
+  application:
+    name: novalume-catalog-service-test
+
+  # Configurações para MongoDB de teste
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: novalume-catalog-test
+      auto-index-creation: true
+      username: admin
+      password: verysecret
+
+  # Desativa as propriedades de desenvolvimento
+  devtools:
+    add-properties: false
+
+minio:
+  access-key: ie7EtGKM9GBiRDH6qSse
+  secret-key: QdEmX0HHXz5D5furuZZ2mK2jNtHihOBnkRs4FHDO
+  bucket-name: test-bucket
+  base-url: http://localhost:9000
+
+logging:
+  level:
+    root: INFO
+    org.springframework: WARN
+    br.com.eduardo.novalumecatalogservice: DEBUG
+
+mockito:
+  mock-maker-inline: true
