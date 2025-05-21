@@ -6,6 +6,8 @@ spring:
       database: novalume-catalog-dev
       authentication-database: admin
       auto-index-creation: true
+      username: admin
+      password: verysecret
   devtools:
     restart:
       enabled: true
