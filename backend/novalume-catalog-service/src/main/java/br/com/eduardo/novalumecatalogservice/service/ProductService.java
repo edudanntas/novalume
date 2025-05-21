@@ -1,6 +1,7 @@
 package br.com.eduardo.novalumecatalogservice.service;
 
 import br.com.eduardo.novalumecatalogservice.dto.ProductCreateDTO;
+import br.com.eduardo.novalumecatalogservice.dto.ProductResponseListDto;
 import br.com.eduardo.novalumecatalogservice.dto.ProductUpdateDto;
 import br.com.eduardo.novalumecatalogservice.infra.exception.custom.EntityAlreadyExistsException;
 import br.com.eduardo.novalumecatalogservice.infra.exception.custom.EntityNotFoundException;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,6 +22,10 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper mapper;
     private final MinioUploadImageService imageService;
+
+    public List<ProductResponseListDto> getAllProducts(){
+        return mapper.mapProductsListToProductListDto(productRepository.findAll());
+    }
 
     public Product createProduct(ProductCreateDTO productCreateDTO) {
 

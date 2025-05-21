@@ -1,6 +1,7 @@
 package br.com.eduardo.novalumecatalogservice.controller;
 
 import br.com.eduardo.novalumecatalogservice.dto.ProductCreateDTO;
+import br.com.eduardo.novalumecatalogservice.dto.ProductResponseListDto;
 import br.com.eduardo.novalumecatalogservice.dto.ProductUpdateDto;
 import br.com.eduardo.novalumecatalogservice.model.Product;
 import br.com.eduardo.novalumecatalogservice.service.ProductService;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/products")
 @RequiredArgsConstructor
@@ -28,6 +31,11 @@ public class ProductController {
     @PostMapping
     public ResponseEntity<Product> createProduct(@RequestBody ProductCreateDTO productCreateDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(productService.createProduct(productCreateDTO));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ProductResponseListDto>> getAllProducts(){
+        return ResponseEntity.ok(productService.getAllProducts());
     }
 
     @GetMapping(path = "/{productId}")
