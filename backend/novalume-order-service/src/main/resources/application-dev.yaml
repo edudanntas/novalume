@@ -11,7 +11,7 @@ spring:
     password: novalumepostgres
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
   rabbitmq:
     host: localhost
     port: 5672
@@ -33,6 +33,10 @@ management:
   endpoint:
     health:
       show-details: always
+
+services:
+  product-catalog:
+    url: http://localhost:8080/api/v1/products
 
 logging:
   level:
