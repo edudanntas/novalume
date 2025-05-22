@@ -1,7 +1,6 @@
 package br.com.eduardo.novalumeorderservice.controller;
 
 import br.com.eduardo.novalumeorderservice.dto.order.OrderCreateDto;
-import br.com.eduardo.novalumeorderservice.dto.order.OrderResponseDto;
 import br.com.eduardo.novalumeorderservice.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +16,8 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping
-    public ResponseEntity<OrderResponseDto> createOrder(@RequestBody OrderCreateDto orderCreateDto) {
-        return ResponseEntity.ok(orderService.createOrder(orderCreateDto));
+    public ResponseEntity<String> createOrder(@RequestBody OrderCreateDto orderCreateDto) {
+        orderService.createOrder(orderCreateDto);
+        return ResponseEntity.ok("Order created");
     }
 }

@@ -1,7 +1,6 @@
 package br.com.eduardo.novalumeorderservice.service;
 
 import br.com.eduardo.novalumeorderservice.dto.order.OrderCreateDto;
-import br.com.eduardo.novalumeorderservice.dto.order.OrderResponseDto;
 import br.com.eduardo.novalumeorderservice.dto.orderitem.OrderItemDto;
 import br.com.eduardo.novalumeorderservice.dto.product.ProductDto;
 import br.com.eduardo.novalumeorderservice.mapper.OrderMapper;
@@ -10,6 +9,7 @@ import br.com.eduardo.novalumeorderservice.model.OrderItem;
 import br.com.eduardo.novalumeorderservice.model.enums.OrderStatus;
 import br.com.eduardo.novalumeorderservice.repository.OrderRepository;
 import br.com.eduardo.novalumeorderservice.service.clients.ProductCatalogClient;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,11 +22,12 @@ public class OrderService {
     private final ProductCatalogClient catalogClient;
     private final OrderRepository orderRepository;
     private final OrderMapper orderMapper;
+    private final MessageProducer producer;
 
-    public OrderResponseDto createOrder(OrderCreateDto orderCreateDto) {
+    public void createOrder(OrderCreateDto orderCreateDto) {
         Order newOrder = initializeOrder(orderCreateDto);
         addOrderItems(newOrder, orderCreateDto.items());
-        return finalizeOrder(newOrder);
+        finalizeOrder(newOrder);
     }
 
     private Order initializeOrder(OrderCreateDto orderCreateDto) {
@@ -59,9 +60,10 @@ public class OrderService {
         return orderItem;
     }
 
-    private OrderResponseDto finalizeOrder(Order order) {
+    @Transactional
+    protected void finalizeOrder(Order order) {
         order.calculateTotalAmount();
         orderRepository.save(order);
-        return orderMapper.mapOrderEntityToOrderResponseDto(order);
+        producer.sendMessage(orderMapper.mapOrderEntityToMessage(order));
     }
 }
