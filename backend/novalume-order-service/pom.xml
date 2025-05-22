@@ -32,6 +32,7 @@
         <org.mapstruct.version>1.6.3</org.mapstruct.version>
         <maven.checkstyle.version>3.3.1</maven.checkstyle.version>
         <spotbugs.version>4.9.3.0</spotbugs.version>
+        <lombok.version>1.18.38</lombok.version>
     </properties>
     <dependencies>
         <!-- Spring Dependencies -->
