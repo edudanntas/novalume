@@ -49,7 +49,7 @@ NovaLume/
 
 Manages product listings, categories, and inventory.
 
-### Order Service
+### [Order Service](./backend/novalume-order-service/)
 
 Order processing and management (in development).
 

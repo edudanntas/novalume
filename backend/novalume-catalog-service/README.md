@@ -1,6 +1,7 @@
 # NovaLume Catalog Service
 
 ## Description
+
 NovaLume Catalog Service is a RESTful API developed using Spring Boot for managing product catalogs. It provides a complete solution for product management with robust validation, error handling, and comprehensive test coverage.
 
 ## Technologies Used
@@ -50,10 +51,12 @@ src/
 ## How to Run
 
 ### Prerequisites
+
 - Java 21+
 - Maven
 
 ### Commands
+
 ```bash
 # Clone the repository
 git clone https://github.com/edudanntas/novalumecatalogservice.git
@@ -71,6 +74,7 @@ mvn spring-boot:run
 ## API Endpoints
 
 ### Products
+
 - **POST /api/products** - Create a new product
 - **GET /api/products** - List all products
 - **GET /api/products/{id}** - Get product by ID
@@ -90,16 +94,19 @@ The service implements global exception handling with standardized responses:
 ## Development
 
 ### Compilation
+
 ```bash
 mvn clean install
 ```
 
 ### Tests
+
 ```bash
 mvn test
 ```
 
 ### Test Coverage
+
 This project uses JaCoCo for test coverage analysis. To generate the coverage report:
 
 ```bash
@@ -115,4 +122,4 @@ The project uses GitHub Actions for continuous integration and deployment. (in p
 ## Documentation
 
 API documentation is available via Swagger UI when the application is running: (in progress)
-http://localhost:8080/swagger-ui.html
+<http://localhost:8080/swagger-ui.html>
