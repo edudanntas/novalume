@@ -9,7 +9,6 @@ import br.com.eduardo.novalumeorderservice.model.OrderItem;
 import br.com.eduardo.novalumeorderservice.model.enums.OrderStatus;
 import br.com.eduardo.novalumeorderservice.repository.OrderRepository;
 import br.com.eduardo.novalumeorderservice.service.clients.ProductCatalogClient;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +21,7 @@ public class OrderService {
     private final ProductCatalogClient catalogClient;
     private final OrderRepository orderRepository;
     private final OrderMapper orderMapper;
-    private final MessageProducer producer;
+    private final OrderEventProducer producer;
 
     public void createOrder(OrderCreateDto orderCreateDto) {
         Order newOrder = initializeOrder(orderCreateDto);
@@ -60,7 +59,6 @@ public class OrderService {
         return orderItem;
     }
 
-    @Transactional
     protected void finalizeOrder(Order order) {
         order.calculateTotalAmount();
         orderRepository.save(order);
