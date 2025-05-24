@@ -21,7 +21,7 @@ public class OrderService {
     private final ProductCatalogClient catalogClient;
     private final OrderRepository orderRepository;
     private final OrderMapper orderMapper;
-    private final MessageProducer producer;
+    private final OrderEventProducer producer;
 
     public void createOrder(OrderCreateDto orderCreateDto) {
         Order newOrder = initializeOrder(orderCreateDto);

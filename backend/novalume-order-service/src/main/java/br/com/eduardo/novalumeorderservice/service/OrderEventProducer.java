@@ -11,10 +11,10 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class MessageProducer {
+public class OrderEventProducer {
     private final RabbitTemplate rabbitTemplate;
 
-    @Value("${producer.topic}")
+    @Value("${spring.rabbitmq.producer.topic}")
     private String TOPIC;
 
     public void sendMessage(OrderMessage orderMessage) {
