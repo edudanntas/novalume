@@ -1,7 +1,7 @@
 package br.com.eduardo.novalumeorderservice.mapper;
 
+import br.com.eduardo.novalumeorderservice.dto.order.CreatePaymentEventDto;
 import br.com.eduardo.novalumeorderservice.dto.order.OrderCreateDto;
-import br.com.eduardo.novalumeorderservice.dto.order.OrderMessage;
 import br.com.eduardo.novalumeorderservice.dto.order.OrderResponseDto;
 import br.com.eduardo.novalumeorderservice.model.Order;
 import br.com.eduardo.novalumeorderservice.model.enums.OrderEvent;
@@ -17,7 +17,7 @@ public interface OrderMapper {
 
     @Mapping(source = "id", target = "orderId")
     @Mapping(target = "eventType", expression = "java(determineOrderEvent(order))")
-    OrderMessage mapOrderEntityToMessage(Order order);
+    CreatePaymentEventDto mapOrderEntityToMessage(Order order);
 
     default OrderEvent determineOrderEvent(Order order){
         if (order.getStatus() == OrderStatus.PENDING){
