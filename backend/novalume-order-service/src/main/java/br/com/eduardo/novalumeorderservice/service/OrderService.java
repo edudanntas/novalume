@@ -9,7 +9,6 @@ import br.com.eduardo.novalumeorderservice.model.OrderItem;
 import br.com.eduardo.novalumeorderservice.model.enums.OrderStatus;
 import br.com.eduardo.novalumeorderservice.repository.OrderRepository;
 import br.com.eduardo.novalumeorderservice.service.clients.ProductCatalogClient;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -60,7 +59,6 @@ public class OrderService {
         return orderItem;
     }
 
-    @Transactional
     protected void finalizeOrder(Order order) {
         order.calculateTotalAmount();
         orderRepository.save(order);
