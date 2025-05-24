@@ -1,0 +1,120 @@
+name: Pull Request Pipeline
+
+on:
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  detect-and-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+      
+      - name: Detect changes in services
+        id: detect_changes
+        run: |
+          if git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep '^backend/novalume-order-service/'; then
+            echo "order_service_changed=true" >> $GITHUB_ENV
+          else
+            echo "order_service_changed=false" >> $GITHUB_ENV
+          fi
+          
+          if git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep '^backend/novalume-catalog-service/'; then
+            echo "catalog_service_changed=true" >> $GITHUB_ENV
+          else
+            echo "catalog_service_changed=false" >> $GITHUB_ENV
+          fi
+          
+          if git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep '^frontend/'; then
+            echo "frontend_changed=true" >> $GITHUB_ENV
+          else
+            echo "frontend_changed=false" >> $GITHUB_ENV
+          fi
+
+      - name: Test and build novalume-order-service
+        if: ${{ env.order_service_changed == 'true' }}
+        run: |
+          cd backend/novalume-order-service
+          mvn verify
+
+      - name: Test and build novalume-catalog-service
+        if: ${{ env.catalog_service_changed == 'true' }}
+        run: |
+          cd backend/novalume-catalog-service
+          mvn verify
+          
+      - name: Setup Node.js
+        if: ${{ env.frontend_changed == 'true' }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
+          
+      - name: Install Angular dependencies
+        if: ${{ env.frontend_changed == 'true' }}
+        run: |
+          cd frontend
+          npm ci
+          
+      - name: Lint frontend
+        if: ${{ env.frontend_changed == 'true' }}
+        run: |
+          cd frontend
+          npm run lint
+          
+      - name: Test frontend
+        if: ${{ env.frontend_changed == 'true' }}
+        run: |
+          cd frontend
+          npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+          
+      - name: Build frontend
+        if: ${{ env.frontend_changed == 'true' }}
+        run: |
+          cd frontend
+          npm run build -- --configuration production
+          
+      - name: Upload frontend test results
+        if: ${{ env.frontend_changed == 'true' && always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-test-results
+          path: frontend/coverage
+          
+      - name: Upload frontend build
+        if: ${{ env.frontend_changed == 'true' && success() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-build
+          path: frontend/dist
+          
+      - name: Upload test results
+        if: ${{ env.order_service_changed == 'true' || env.catalog_service_changed == 'true' && success() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: |
+            backend/novalume-order-service/target/surefire-reports/
+            backend/novalume-catalog-service/target/surefire-reports/
+            
+      - name: Upload JaCoCo coverage report
+        if: ${{ env.order_service_changed == 'true' || env.catalog_service_changed == 'true' && success() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: jacoco-report
+          path: |
+            backend/novalume-order-service/target/site/jacoco/
+            backend/novalume-catalog-service/target/site/jacoco/
