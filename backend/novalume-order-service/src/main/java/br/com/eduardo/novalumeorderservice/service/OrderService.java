@@ -39,13 +39,13 @@ public class OrderService {
         finalizeOrder(newOrder);
     }
 
-    public OrderResponseDto getOderById(UUID orderId, String filters){
+    public OrderResponseDto getOderById(UUID orderId, String filters) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new OrderNotFoundException("Order not found"));
 
         OrderResponseDto orderResponseDto = orderMapper.mapOrderEntityToOrderResponseDto(order);
 
-        if (filters != null && !filters.isEmpty()){
+        if (filters != null && !filters.isEmpty()) {
             return returnFilteredOrder(orderResponseDto, filters);
         }
 
@@ -88,8 +88,8 @@ public class OrderService {
         producer.sendMessage(orderMapper.mapOrderEntityToMessage(order));
     }
 
-    private OrderResponseDto returnFilteredOrder(OrderResponseDto order, String fields){
-        try{
+    private OrderResponseDto returnFilteredOrder(OrderResponseDto order, String fields) {
+        try {
             Set<String> fieldSet = Arrays.stream(fields.split(","))
                     .map(String::trim)
                     .collect(Collectors.toSet());

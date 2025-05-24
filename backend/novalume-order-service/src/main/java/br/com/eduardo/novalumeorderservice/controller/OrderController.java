@@ -29,8 +29,8 @@ public class OrderController {
     }
 
     @GetMapping(value = "/{orderId}")
-    public ResponseEntity<OrderResponseDto> getORderById(@PathVariable UUID orderId,
-                                                         @RequestParam(required = false) String fields){
+    public ResponseEntity<OrderResponseDto> getOrderById(@PathVariable UUID orderId,
+                                                         @RequestParam(required = false) String fields) {
         return ResponseEntity.status(HttpStatus.OK).body(orderService.getOderById(orderId, fields));
     }
 }
