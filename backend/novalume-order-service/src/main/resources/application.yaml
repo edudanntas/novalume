@@ -18,6 +18,10 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
   datasource:
     driver-class-name: org.postgresql.Driver
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true
 
 server:
   port: 8081
