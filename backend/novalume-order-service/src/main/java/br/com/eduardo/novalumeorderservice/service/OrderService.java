@@ -5,6 +5,7 @@ import br.com.eduardo.novalumeorderservice.dto.order.OrderResponseDto;
 import br.com.eduardo.novalumeorderservice.dto.orderitem.OrderItemDto;
 import br.com.eduardo.novalumeorderservice.dto.product.ProductDto;
 import br.com.eduardo.novalumeorderservice.infra.exception.custom.OrderNotFoundException;
+import br.com.eduardo.novalumeorderservice.infra.exception.custom.ProductCatalogUnavailableException;
 import br.com.eduardo.novalumeorderservice.mapper.OrderMapper;
 import br.com.eduardo.novalumeorderservice.model.Order;
 import br.com.eduardo.novalumeorderservice.model.OrderItem;
@@ -13,6 +14,7 @@ import br.com.eduardo.novalumeorderservice.repository.OrderRepository;
 import br.com.eduardo.novalumeorderservice.service.clients.ProductCatalogClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -25,6 +27,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class OrderService {
     private final ProductCatalogClient catalogClient;
     private final OrderRepository orderRepository;
@@ -39,17 +42,31 @@ public class OrderService {
         finalizeOrder(newOrder);
     }
 
-    public OrderResponseDto getOderById(UUID orderId, String filters) {
+    public OrderResponseDto getOderById(UUID orderId, String fields) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new OrderNotFoundException("Order not found"));
 
         OrderResponseDto orderResponseDto = orderMapper.mapOrderEntityToOrderResponseDto(order);
 
-        if (filters != null && !filters.isEmpty()) {
-            return returnFilteredOrder(orderResponseDto, filters);
+        if (fields != null && !fields.isEmpty()) {
+            return returnFilteredOrder(orderResponseDto, fields);
         }
 
         return orderResponseDto;
+    }
+
+    public List<OrderResponseDto> getAllOrdersFromCustomer(UUID customerId, String fields) {
+        List<Order> orders = orderRepository.findAllByCustomerId(customerId);
+
+        List<OrderResponseDto> orderResponseDtoList = orderMapper.mapListOfOrderEntityToOrderResponseDtoList(orders);
+
+        if (fields != null && !fields.isEmpty()) {
+            return orderResponseDtoList.stream()
+                    .map(orderResponseDto -> returnFilteredOrder(orderResponseDto, fields))
+                    .toList();
+        }
+
+        return orderResponseDtoList;
     }
 
     private Order initializeOrder(OrderCreateDto orderCreateDto) {

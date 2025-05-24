@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -32,5 +33,11 @@ public class OrderController {
     public ResponseEntity<OrderResponseDto> getOrderById(@PathVariable UUID orderId,
                                                          @RequestParam(required = false) String fields) {
         return ResponseEntity.status(HttpStatus.OK).body(orderService.getOderById(orderId, fields));
+    }
+
+    @GetMapping(value = "/customer/{customerId}")
+    public ResponseEntity<List<OrderResponseDto>> getOrdersFromCustomer(@PathVariable UUID customerId,
+                                                                        @RequestParam(required = false) String fields) {
+        return ResponseEntity.status(HttpStatus.OK).body(orderService.getAllOrdersFromCustomer(customerId, fields));
     }
 }

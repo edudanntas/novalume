@@ -9,11 +9,15 @@ import br.com.eduardo.novalumeorderservice.model.enums.OrderStatus;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface OrderMapper {
     Order mapOrderCreateDtoToOrderEntity(OrderCreateDto orderCreateDto);
 
     OrderResponseDto mapOrderEntityToOrderResponseDto(Order order);
+
+    List<OrderResponseDto> mapListOfOrderEntityToOrderResponseDtoList(List<Order> orders);
 
     @Mapping(source = "id", target = "orderId")
     @Mapping(target = "eventType", expression = "java(determineOrderEvent(order))")
