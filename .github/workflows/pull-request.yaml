@@ -47,13 +47,13 @@ jobs:
         if: ${{ env.order_service_changed == 'true' }}
         run: |
           cd backend/novalume-order-service
-          mvn verify
+          mvn verify -P test -Dspring.profiles.active=test
 
       - name: Test and build novalume-catalog-service
         if: ${{ env.catalog_service_changed == 'true' }}
         run: |
           cd backend/novalume-catalog-service
-          mvn verify
+          mvn verify -P test -Dspring.profiles.active=test
           
       - name: Setup Node.js
         if: ${{ env.frontend_changed == 'true' }}
