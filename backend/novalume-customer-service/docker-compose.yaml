@@ -17,5 +17,16 @@ services:
       timeout: 5s
       retries: 5
 
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.2.4
+    container_name: novalume-keycloak
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+    ports:
+      - "9090:8080"
+    command:
+      - "start-dev"
+
 volumes:
   postgres_data_customer:
