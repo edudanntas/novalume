@@ -1,0 +1,37 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: novalume_postgres_customer
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: novalume_customers
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: novalumepostgres
+    volumes:
+      - postgres_data_customer:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  vault:
+    image: vault:1.13.3
+    container_name: vault
+    ports:
+      - "8200:8200"
+    environment:
+      VAULT_DEV_ROOT_TOKEN_ID: root
+      VAULT_ADDR: http://127.0.0.1:8200
+      VAULT_DEV_LISTEN_ADDRESS: 0.0.0.0:8200
+    cap_add:
+      - IPC_LOCK
+    command: server -dev
+    volumes:
+      - vault_data:/vault/file
+
+volumes:
+  postgres_data_customer:
+  vault_data:
