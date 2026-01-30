@@ -1,11 +1,13 @@
 package br.com.eduardo.novalumecustomerservice.service;
 
 import br.com.eduardo.novalumecustomerservice.dto.customer.CreateCustomerDto;
+import br.com.eduardo.novalumecustomerservice.dto.customer.CustomerLoginDto;
 import br.com.eduardo.novalumecustomerservice.entity.Customer;
 import br.com.eduardo.novalumecustomerservice.repository.CustomerRepository;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,5 +45,13 @@ public class CustomerService {
         if (customer.isEmpty()) throw new EntityNotFoundException("Cannot find customer with id: " + keycloakUserId);
 
         return customer.get();
+    }
+
+    public HttpHeaders authenticate(CustomerLoginDto customerLoginDto){
+        String token = keycloakService.authenticate(customerLoginDto);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.AUTHORIZATION, token);
+        return headers;
     }
 }

@@ -1,6 +1,7 @@
 package br.com.eduardo.novalumecustomerservice.controller;
 
 import br.com.eduardo.novalumecustomerservice.dto.customer.CreateCustomerDto;
+import br.com.eduardo.novalumecustomerservice.dto.customer.CustomerLoginDto;
 import br.com.eduardo.novalumecustomerservice.entity.Customer;
 import br.com.eduardo.novalumecustomerservice.infra.security.custom.OwnerOnly;
 import br.com.eduardo.novalumecustomerservice.service.CustomerService;
@@ -25,6 +26,11 @@ public class CustomerController {
     @OwnerOnly
     public ResponseEntity<Customer> getCustomerById(@PathVariable String id) {
         return ResponseEntity.status(HttpStatus.OK).body(customerService.getCustomerById(id));
+    }
+
+    @PostMapping(value = "/authenticate")
+    public ResponseEntity<String> authenticate(@RequestBody CustomerLoginDto customerLoginDto){
+        return ResponseEntity.status(HttpStatus.OK).headers(customerService.authenticate(customerLoginDto)).build();
     }
 
     @PostMapping(value = "/register")

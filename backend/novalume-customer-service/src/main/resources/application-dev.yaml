@@ -11,7 +11,7 @@ spring:
     password: novalumepostgres
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
   security:
     oauth2:
       resourceserver:
@@ -22,7 +22,11 @@ spring:
 keycloak:
   admin:
     realm-name: novalumestore
-
+  token:
+    token-url: http://localhost:9090/realms/novalumestore/protocol/openid-connect/token
+    client-secret: HXpZdfWfOY96fzYiSyWDxW9XM6nMJuM2
+    client-id: ecom
+    grant-type: password
 
 server:
   error:
